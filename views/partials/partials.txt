@@ -1,0 +1,31 @@
+EJS partials are reusable pieces of an EJS page, such as a navbar, header, footer, or sidebar.
+
+They help avoid repeating the same HTML code on multiple pages.
+
+Example folder structure:
+
+views/
+partials/
+nav.ejs
+footer.ejs
+index.ejs
+about.ejs
+
+To include a partial:
+
+<%- include("partials/nav") %>
+
+Example:
+
+index.ejs:
+<%- include("partials/nav") %>
+
+<h1>Home Page</h1>
+
+<%- include("partials/footer") %>
+
+Main idea:
+
+EJS partials = reusable EJS components.
+
+They make your Express application cleaner, easier to maintain, and reduce duplicate code.
