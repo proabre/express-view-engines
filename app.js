@@ -15,7 +15,21 @@ app.listen(3000, () => {
 });
 
 app.get("/", (req, res) => {
-  res.render("index", { title: "Home" });
+  const blogs = [
+    {
+      title: "abresh finds balls",
+      snippet: "Lorem ipsum dolor sit, amet consectetur adipisicing elit.",
+    },
+    {
+      title: "sol finds stars",
+      snippet: "Lorem ipsum dolor sit, amet consectetur adipisicing elit.",
+    },
+    {
+      title: "abrelo finds dimonds",
+      snippet: "Lorem ipsum dolor sit, amet consectetur adipisicing elit.",
+    },
+  ];
+  res.render("index", { title: "Home", blogs });
 });
 
 app.get("/about", (req, res) => {
