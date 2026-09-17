@@ -15,17 +15,30 @@ app.listen(3000, () => {
 });
 
 app.get("/", (req, res) => {
-  res.render("index");
+  res.render("index", { title: "Home" });
 });
 
 app.get("/about", (req, res) => {
-  res.render("about");
+  res.render("about", { title: "About" });
 });
 
 app.get("/blogs/create", (req, res) => {
-  res.render("create");
+  res.render("create", { title: "Create a new blog" });
 });
 
-app.use("/404", (req, res) => {
-  res.status(404).render("404");
+app.use((req, res) => {
+  res.status(404).render("404", { title: "404" });
 });
+
+// EJS (Embedded JavaScript Templates) is a template engine used with Express to create dynamic HTML pages.
+
+// Install: npm install ejs
+// Enable EJS: app.set("view engine", "ejs")
+// EJS files are usually stored in the views folder.
+// EJS files use the .ejs extension.
+// Use res.render("index") to render views/index.ejs.
+// You can pass data from Express to EJS:
+// res.render("index", { name: "John" })
+// Display data using: <%= name %>
+// Run JavaScript using: <% code %>
+// EJS supports conditions and loops.
