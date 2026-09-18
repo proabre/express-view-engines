@@ -1,18 +1,26 @@
 //import express
 const express = require("express");
+const mongoose = require("mongoose");
 
 //express app
 
 const app = express();
 
+//connect to mongodb
+const dbURI =
+  "mongodb+srv://abresh:test1234@cluster0.yqmtu5c.mongodb.net/node-tuts?appName=Cluster0";
+mongoose
+  .connect(dbURI)
+  .then((result) =>
+    //listen for requests after connecting to db
+    app.listen(3000, () => {
+      console.log(`Server is running on http://localhost:3000`);
+    }),
+  )
+  .catch((err) => console.log(err));
+
 //register view engines
 app.set("view engine", "ejs");
-
-//listen for requests
-
-app.listen(3000, () => {
-  console.log(`Server is running on http://localhost:3000`);
-});
 
 app.get("/", (req, res) => {
   const blogs = [
