@@ -1,0 +1,96 @@
+Express Middleware — Short Note
+
+Middleware is a function that runs between the request and the response.
+
+Basic syntax:
+
+app.use((req, res, next) => {
+// Do something
+next();
+});
+
+req = information about the request.
+
+res = used to send a response.
+
+next() = tells Express to continue to the next middleware or route.
+
+Middleware can be used for:
+
+* Logging requests
+* Authentication
+* Checking data
+* Processing JSON
+* Serving static files
+* Error handling
+
+Example:
+
+app.use((req, res, next) => {
+console.log("Request received");
+next();
+});
+
+Remember:
+
+Request → Middleware → Route → Response
+
+Main idea: Middleware is a checkpoint that runs before the request reaches the final route/response.
+
+================================================================================================
+
+Serving Static Files with Express — Short Note
+===============================================
+
+Static files are files that do not change dynamically, such as:
+
+* CSS files
+* JavaScript files
+* Images
+* Fonts
+* HTML files
+
+Express provides built-in middleware for serving static files:
+
+app.use(express.static("public"));
+
+This tells Express:
+
+"Serve files from the public folder."
+
+Example folder structure:
+
+project/
+app.js
+public/
+css/
+style.css
+images/
+logo.png
+js/
+script.js
+
+In `app.js`:
+
+app.use(express.static("public"));
+
+Now you can access:
+
+/css/style.css
+/images/logo.png
+/js/script.js
+
+You don't need to create a separate route for each file.
+
+Remember:
+
+express.static("public") → makes the public folder accessible to the browser.
+
+Common setup:
+
+const express = require("express");
+const app = express();
+
+app.use(express.static("public"));
+
+app.listen(3000);
