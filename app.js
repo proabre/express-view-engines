@@ -59,8 +59,28 @@ app.get("/add-blog", (req, res) => {
     body: "more about my new blog",
   });
 
-  blog //get data and save in database
+  blog //get data and save in database6
     .save()
+    .then((result) => {
+      res.send(result);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+app.get("/all-blogs", (req, res) => {
+  Blog.find() //get all data data from follection using the Blog model and a method find()
+    .then((result) => {
+      res.send(result);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+app.get("/single-blog", (req, res) => {
+  Blog.findById("6ab025765365f3ab1e667199") //get a single blog from database collections with id
     .then((result) => {
       res.send(result);
     })
