@@ -81,6 +81,18 @@ app.post("/blogs", (req, res) => {
       console.log(err);
     });
 });
+
+app.get("/blogs/:id", (req, res) => {
+  const id = req.params.id;
+  //console.log(id);
+  Blog.findById(id)
+    .then((result) => {
+      res.render("details", { blog: result, title: "Blog details" });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
 app.get("/blogs/create", (req, res) => {
   res.render("create", { title: "Create a new blog" });
 });
