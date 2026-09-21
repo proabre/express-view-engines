@@ -82,6 +82,10 @@ app.post("/blogs", (req, res) => {
     });
 });
 
+app.get("/blogs/create", (req, res) => {
+  res.render("create", { title: "Create a new blog" });
+});
+
 app.get("/blogs/:id", (req, res) => {
   const id = req.params.id;
   //console.log(id);
@@ -93,8 +97,17 @@ app.get("/blogs/:id", (req, res) => {
       console.log(err);
     });
 });
-app.get("/blogs/create", (req, res) => {
-  res.render("create", { title: "Create a new blog" });
+
+app.delete("/blogs/:id", (req, res) => {
+  const id = req.params.id;
+
+  Blog.findByIdAndDelete(id)
+    .then((result) => {
+      res.json({ redirect: "/blogs" });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 });
 
 //mongoose and mongo sandbox routes
