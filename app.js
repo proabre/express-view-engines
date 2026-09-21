@@ -21,7 +21,10 @@ mongoose
 //register view engines
 app.set("view engine", "ejs");
 
+//routes
+
 app.get("/", (req, res) => {
+  /*
   const blogs = [
     {
       title: "abresh finds balls",
@@ -37,24 +40,56 @@ app.get("/", (req, res) => {
     },
   ];
   res.render("index", { title: "Home", blogs });
+
+  */
+
+  res.redirect("/blogs"); //resirecting home page to blogs
+});
+
+//middleware and static files
+app.use(express.static("public"));
+app.use(express.urlencoded()); //takes all url encoded data and it passes it intoan object that we can use in the request object
+
+//blog routes
+
+app.get("/blogs", (req, res) => {
+  Blog.find()
+    .sort({ createdAt: -1 }) //sort blogs in decending order i.e from newest to oldest
+    .then((result) => {
+      res.render("index", { title: "All Blogs", blogs: result });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 });
 
 app.get("/about", (req, res) => {
   res.render("about", { title: "About" });
 });
 
+app.post("/blogs", (req, res) => {
+  //console.log(req.body);
+
+  const blog = new Blog(req.body);
+
+  blog
+    .save() //save into the data base after clicking submit button on the form
+    .then((result) => {
+      res.redirect("/blogs"); //redirecting to blogs to display newly submited blogs after saving to db
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
 app.get("/blogs/create", (req, res) => {
   res.render("create", { title: "Create a new blog" });
 });
-
-//middleware and static files
-app.use(express.static("public"));
 
 //mongoose and mongo sandbox routes
 
 app.get("/add-blog", (req, res) => {
   const blog = new Blog({
-    title: "new blog 2",
+    title: "new blog 4",
     snippet: "about my new blog",
     body: "more about my new blog",
   });
