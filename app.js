@@ -48,7 +48,7 @@ app.get("/", (req, res) => {
 
 //middleware and static files
 app.use(express.static("public"));
-app.use(express.urlencoded()); //takes all url encoded data and it passes it intoan object that we can use in the request object
+app.use(express.urlencoded({ extended: true })); //express.urlencoded() is middleware that lets Express read data sent from HTML forms.
 
 //blog routes
 
@@ -67,13 +67,14 @@ app.get("/about", (req, res) => {
   res.render("about", { title: "About" });
 });
 
+//post method to create a blog and put into a database
 app.post("/blogs", (req, res) => {
   //console.log(req.body);
 
   const blog = new Blog(req.body);
 
   blog
-    .save() //save into the data base after clicking submit button on the form
+    .save() //save into the database after clicking submit button on the form
     .then((result) => {
       res.redirect("/blogs"); //redirecting to blogs to display newly submited blogs after saving to db
     })
@@ -86,8 +87,9 @@ app.get("/blogs/create", (req, res) => {
   res.render("create", { title: "Create a new blog" });
 });
 
+//retrive and dispaly specefic blog by its unique id
 app.get("/blogs/:id", (req, res) => {
-  const id = req.params.id;
+  const id = req.params.id; //Used to get values from the URL. If you visit:/blogs/123  then req.param.id is 123
   //console.log(id);
   Blog.findById(id)
     .then((result) => {
@@ -98,10 +100,11 @@ app.get("/blogs/:id", (req, res) => {
     });
 });
 
+//delete request to delete a blog by its unique id
 app.delete("/blogs/:id", (req, res) => {
-  const id = req.params.id;
+  const id = req.params.id; //to get id from url
 
-  Blog.findByIdAndDelete(id)
+  Blog.findByIdAndDelete(id) //delete a blog at this specific id
     .then((result) => {
       res.json({ redirect: "/blogs" });
     })
@@ -113,13 +116,14 @@ app.delete("/blogs/:id", (req, res) => {
 //mongoose and mongo sandbox routes
 
 app.get("/add-blog", (req, res) => {
+  //blog model
   const blog = new Blog({
     title: "new blog 4",
     snippet: "about my new blog",
     body: "more about my new blog",
   });
 
-  blog //get data and save in database6
+  blog //get data and save in database
     .save()
     .then((result) => {
       res.send(result);
@@ -149,7 +153,7 @@ app.get("/single-blog", (req, res) => {
     });
 });
 
-//middle ware with out next()
+//middle ware without next()
 app.use((req, res) => {
   res.status(404).render("404", { title: "404" });
 });
